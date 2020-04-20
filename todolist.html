@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .selected{
+            background: red;
+        }
+        .disselected{
+            background: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" :style="{'margin':'100px auto' , 'width':'300px'}">
+        <div :style="titleStyle">{{title}}</div>
+        <ul v-for = "(item , index) in product" :style="ulStyle" class="disselected" @click = "add($event , index)">
+            <li :style="{'float' : 'left'}">{{item.name}}</li>
+            <li :style="{'float' : 'right'}">{{item.price}}</li>
+        </ul>
+        <div>总价：{{count}}</div>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        new Vue({
+            el : "#app",
+            data : {
+                title : "todolist",
+                count : 0,
+                
+                titleStyle : {
+                    color : "#000",
+                    fontSize : "30px",
+                    borderBottom : "1px solid #999",
+                    textAlign : "center"
+                },
+                ulStyle : {
+                    listStyle : 'none',
+                    height : "50px",
+                    lineHeight : "50px",
+                    margin : "10px 0",
+                    padding : "5px"
+                },
+                product : [
+                    {
+                        name : "衣服",
+                        price : "123",
+                        bflag : false
+                    },
+                    {
+                        name : "裤子",
+                        price : "12",
+                        bflag : false
+                    },
+                    {
+                        name : "鞋",
+                        price : "33",
+                        bflag : false
+                    },
+                    {
+                        name : "手机",
+                        price : "234",
+                        bflag : false
+                    },
+                    {
+                        name : "电脑",
+                        price : "543",
+                        bflag : false
+                    },
+                ]
+            },
+            methods : {
+                add(e , num){
+                    if(e.target.className == "selected" || e.target.className == "disselected"){
+                        this.product[num].bflag = !this.product[num].bflag;
+                        e.target.className = this.product[num].bflag ? "selected":"disselected";
+                        this.count += this.product[num].bflag ? parseInt(this.product[num].price):parseInt(this.product[num].price)*(-1);
+                    }   
+                }
+            }
+        });
+    </script>
+</body>
+</html>
